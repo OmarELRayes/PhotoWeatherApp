@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/ic_empty"
+        android:contentDescription="@string/weather_photos_empty_image" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:text="@string/weather_photos_empty_description"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+        android:textSize="14sp" />
+
+</LinearLayout>

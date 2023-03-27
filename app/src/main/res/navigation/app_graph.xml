@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_graph"
+    app:startDestination="@id/weatherPhotosFragment">
+
+    <fragment
+        android:id="@+id/weatherPhotosFragment"
+        android:name="com.example.photoweather.ui.feature.list.WeatherPhotosFragment"
+        android:label="fragment_weather_photos"
+        tools:layout="@layout/fragment_weather_photos" >
+        <action
+            android:id="@+id/action_weatherPhotosFragment_to_addWeatherPhotoFragment"
+            app:destination="@id/addWeatherPhotoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addWeatherPhotoFragment"
+        android:name="com.example.photoweather.ui.feature.add.AddWeatherPhotoFragment"
+        android:label="fragment_add_weather_photo"
+        tools:layout="@layout/fragment_add_weather_photo" />
+</navigation>
