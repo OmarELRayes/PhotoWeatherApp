@@ -20,9 +20,10 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
-class AddWeatherPhotoFragment : BaseFragment<AddWeatherPhotoViewState, AddWeatherPhotoViewModel, FragmentAddWeatherPhotoBinding>(
-    R.layout.fragment_add_weather_photo
-) {
+class AddWeatherPhotoFragment :
+    BaseFragment<AddWeatherPhotoViewState, AddWeatherPhotoViewModel, FragmentAddWeatherPhotoBinding>(
+        R.layout.fragment_add_weather_photo
+    ) {
     override val viewModel: AddWeatherPhotoViewModel by viewModels()
     override val binding: FragmentAddWeatherPhotoBinding by viewBinding()
 
@@ -74,6 +75,9 @@ class AddWeatherPhotoFragment : BaseFragment<AddWeatherPhotoViewState, AddWeathe
     private fun handleViewStates(state: AddWeatherPhotoViewState) {
         state.userLocation?.let {
             Toast.makeText(requireContext(), it.latitude.toString(), Toast.LENGTH_SHORT).show()
+        }
+
+        state.weatherData?.let {
         }
     }
 
