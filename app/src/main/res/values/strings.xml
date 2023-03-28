@@ -1,6 +1,16 @@
 <resources>
     <string name="app_name">PhotoWeather</string>
+
     <string name="weather_photos_add_content_description">Add Weather Photo</string>
     <string name="weather_photos_empty_description">You haven\'t added any photo yet.</string>
     <string name="weather_photos_empty_image">Empty Image</string>
+
+
+    <string name="add_weather_weather_condition">Weather Condition: %s</string>
+    <string name="add_weather_temperature">Temperature: %s</string>
+    <string name="add_weather_humidity">Humidity: %s</string>
+    <string name="add_weather_country">Country: %s</string>
+    <string name="add_weather_name">Name: %s</string>
+    <string name="add_weather_confirm">Confirm</string>
+    <string name="add_weather_share">Share</string>
 </resources>

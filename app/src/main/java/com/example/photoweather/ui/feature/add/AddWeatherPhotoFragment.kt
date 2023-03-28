@@ -1,23 +1,31 @@
 package com.example.photoweather.ui.feature.add
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.example.photoweather.R
+import com.example.photoweather.common.FileHandler
 import com.example.photoweather.common.delegate.viewBinding
 import com.example.photoweather.databinding.FragmentAddWeatherPhotoBinding
+import com.example.photoweather.domain.model.WeatherData
 import com.example.photoweather.ui.base.BaseFragment
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class AddWeatherPhotoFragment :
@@ -78,6 +86,23 @@ class AddWeatherPhotoFragment :
         }
 
         state.weatherData?.let {
+            updateWeatherData(it)
+        }
+    }
+
+    private fun updateWeatherData(weatherData: WeatherData) {
+        with(binding) {
+            groupWeatherData.isVisible = true
+            btnShare.isEnabled = true
+            btnConfirm.isEnabled = true
+            humidity.text =
+                getString(R.string.add_weather_humidity, weatherData.humidity.toString())
+            temperature.text =
+                getString(R.string.add_weather_temperature, weatherData.temperature.toString())
+            country.text = getString(R.string.add_weather_country, weatherData.country)
+            name.text = getString(R.string.add_weather_name, weatherData.name)
+            description.text =
+                getString(R.string.add_weather_weather_condition, weatherData.description)
         }
     }
 
@@ -94,6 +119,32 @@ class AddWeatherPhotoFragment :
     override fun initView() {
         with(binding) {
             imageView.setImageURI(args.imageUri.toUri())
+
+            btnShare.setOnClickListener {
+                shareImage(content)
+            }
+        }
+    }
+
+    private fun getBitmapFromView(view: View): Bitmap {
+        val bitmap = Bitmap.createBitmap(
+            view.width,
+            view.height,
+            Bitmap.Config.ARGB_8888
+        )
+        val canvas = Canvas(bitmap)
+        view.draw(canvas)
+        return bitmap
+    }
+
+    private fun shareImage(view: View) {
+        lifecycleScope.launch {
+            val bitmap = getBitmapFromView(view)
+            val shareIntent = Intent(Intent.ACTION_SEND)
+            shareIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            shareIntent.putExtra(Intent.EXTRA_STREAM, FileHandler.getUri(requireContext(), bitmap))
+            shareIntent.type = "image/png"
+            startActivity(Intent.createChooser(shareIntent, "Share image"))
         }
     }
 }
