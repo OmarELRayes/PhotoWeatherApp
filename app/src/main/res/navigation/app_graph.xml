@@ -18,5 +18,9 @@
         android:id="@+id/addWeatherPhotoFragment"
         android:name="com.example.photoweather.ui.feature.add.AddWeatherPhotoFragment"
         android:label="fragment_add_weather_photo"
-        tools:layout="@layout/fragment_add_weather_photo" />
+        tools:layout="@layout/fragment_add_weather_photo" >
+        <argument
+            android:name="imageUri"
+            app:argType="string" />
+    </fragment>
 </navigation>
