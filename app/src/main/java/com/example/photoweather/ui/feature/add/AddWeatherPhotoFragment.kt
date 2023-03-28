@@ -14,6 +14,7 @@ import com.example.photoweather.R
 import com.example.photoweather.common.delegate.viewBinding
 import com.example.photoweather.databinding.FragmentAddWeatherPhotoBinding
 import com.example.photoweather.ui.base.BaseFragment
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -79,6 +80,10 @@ class AddWeatherPhotoFragment : BaseFragment<AddWeatherPhotoViewState, AddWeathe
     private fun handleEvents(state: AddWeatherPhotoViewState) {
         if (state.shouldRequestPermission) {
             requestLocationPermission()
+        }
+
+        state.error?.let {
+            Snackbar.make(requireView(), it.message ?: "Something went wrong", Snackbar.LENGTH_LONG)
         }
     }
 

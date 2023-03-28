@@ -22,7 +22,9 @@ class GetUserLocationUseCase @Inject constructor(
     suspend operator fun invoke() = callbackFlow {
         val locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult) {
-                trySend(locationResult.lastLocation)
+                if (trySend(locationResult.lastLocation).isSuccess) {
+                    close()
+                }
             }
         }
 
