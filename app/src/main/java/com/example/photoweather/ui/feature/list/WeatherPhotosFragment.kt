@@ -15,7 +15,9 @@ import com.example.photoweather.databinding.FragmentWeatherPhotosBinding
 import com.example.photoweather.ui.base.BaseFragment
 
 class WeatherPhotosFragment :
-    BaseFragment<WeatherPhotosViewModel, FragmentWeatherPhotosBinding>(R.layout.fragment_weather_photos) {
+    BaseFragment<WeatherPhotosViewState, WeatherPhotosViewModel, FragmentWeatherPhotosBinding>(
+        R.layout.fragment_weather_photos
+    ) {
 
     override val viewModel: WeatherPhotosViewModel by viewModels()
     override val binding: FragmentWeatherPhotosBinding by viewBinding()
@@ -39,11 +41,6 @@ class WeatherPhotosFragment :
         with(binding) {
             btnAddWeather.setOnClickListener {
                 takePhoto()
-                /*
-                findNavController().navigate(
-                    WeatherPhotosFragmentDirections
-                        .actionWeatherPhotosFragmentToAddWeatherPhotoFragment(),
-                )*/
             }
         }
     }
@@ -55,8 +52,8 @@ class WeatherPhotosFragment :
                 MediaStore.EXTRA_OUTPUT,
                 FileHandler.getUri(
                     requireContext(),
-                    photoFile!!,
-                ),
+                    photoFile!!
+                )
             )
             activityResult.launch(takePictureIntent)
         }
@@ -65,7 +62,7 @@ class WeatherPhotosFragment :
     private fun navigateToAddWeatherPhoto(uri: Uri) {
         findNavController().navigate(
             WeatherPhotosFragmentDirections
-                .actionWeatherPhotosFragmentToAddWeatherPhotoFragment(uri.toString()),
+                .actionWeatherPhotosFragmentToAddWeatherPhotoFragment(uri.toString())
         )
     }
 }

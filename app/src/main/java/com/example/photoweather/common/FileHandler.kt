@@ -15,7 +15,7 @@ object FileHandler {
         return File.createTempFile(
             imageFileName, /* prefix */
             ".jpg", /* suffix */
-            storageDir, /* directory */
+            storageDir /* directory */
         )
     }
 
@@ -23,7 +23,7 @@ object FileHandler {
         return FileProvider.getUriForFile(
             context,
             "com.example.photoweather.provider",
-            file,
+            file
         )
     }
 }
