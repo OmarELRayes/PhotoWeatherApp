@@ -9,6 +9,7 @@ interface WeatherApi {
     suspend fun getWeatherData(
         @Query("lat") lat: Double,
         @Query("lon") lon: Double,
-        @Query("appid") appId: String = "0937aa8e08d8480d6530e2b4b97c14cc"
+        // This is only for task purposes, api key should saved in a more secure way (eg. gradle properties or system environments)
+        @Query("appid") appId: String = "7087059a9570a83de3512a9ecde2e9b5"
     ): WeatherDataResponse
 }
