@@ -6,7 +6,6 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.view.View
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
@@ -14,6 +13,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.photoweather.R
 import com.example.photoweather.common.FileHandler
@@ -81,10 +81,6 @@ class AddWeatherPhotoFragment :
     }
 
     private fun handleViewStates(state: AddWeatherPhotoViewState) {
-        state.userLocation?.let {
-            Toast.makeText(requireContext(), it.latitude.toString(), Toast.LENGTH_SHORT).show()
-        }
-
         state.weatherData?.let {
             updateWeatherData(it)
         }
@@ -122,6 +118,11 @@ class AddWeatherPhotoFragment :
 
             btnShare.setOnClickListener {
                 shareImage(content)
+            }
+
+            btnConfirm.setOnClickListener {
+                viewModel.saveWeatherPhoto(args.imageUri)
+                findNavController().navigateUp()
             }
         }
     }

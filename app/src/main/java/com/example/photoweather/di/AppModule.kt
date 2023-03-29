@@ -6,9 +6,13 @@
 
 package com.example.photoweather.di
 
+import android.content.Context
+import androidx.room.Room
+import com.example.photoweather.data.source.local.WeatherPhotoDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 import kotlinx.coroutines.CoroutineDispatcher
@@ -16,13 +20,21 @@ import kotlinx.coroutines.Dispatchers
 
 @Module
 @InstallIn(SingletonComponent::class)
-interface AppModule {
+class AppModule {
 
-    companion object {
-        @Provides
-        @Singleton
-        fun provideCoroutineContext(): CoroutineDispatcher {
-            return Dispatchers.IO
-        }
+    @Provides
+    @Singleton
+    fun provideCoroutineContext(): CoroutineDispatcher {
+        return Dispatchers.IO
     }
+
+    @Singleton
+    @Provides
+    fun provideWeatherItemDatabase(@ApplicationContext context: Context) =
+        Room.databaseBuilder(context, WeatherPhotoDatabase::class.java, "weather_photo_db")
+            .build()
+
+    @Singleton
+    @Provides
+    fun provideWeatherHistoryDao(database: WeatherPhotoDatabase) = database.weatherPhotoDao()
 }

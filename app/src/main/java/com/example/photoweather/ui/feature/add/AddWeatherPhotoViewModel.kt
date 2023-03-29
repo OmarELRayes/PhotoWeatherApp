@@ -2,6 +2,7 @@ package com.example.photoweather.ui.feature.add
 
 import android.location.Location
 import androidx.lifecycle.viewModelScope
+import com.example.photoweather.domain.usecase.AddWeatherPhotoUseCase
 import com.example.photoweather.domain.usecase.GetUserLocationUseCase
 import com.example.photoweather.domain.usecase.GetWeatherDataUseCase
 import com.example.photoweather.ui.base.BaseViewModel
@@ -12,7 +13,8 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class AddWeatherPhotoViewModel @Inject constructor(
     private val getUserLocationUseCase: GetUserLocationUseCase,
-    private val getWeatherDataUseCase: GetWeatherDataUseCase
+    private val getWeatherDataUseCase: GetWeatherDataUseCase,
+    private val addWeatherPhotoUseCase: AddWeatherPhotoUseCase
 ) : BaseViewModel<AddWeatherPhotoViewState>() {
 
     override val defaultViewState: AddWeatherPhotoViewState
@@ -30,7 +32,6 @@ class AddWeatherPhotoViewModel @Inject constructor(
         viewModelScope.launch {
             _viewStates.value = defaultViewState.copy(loading = true)
             getUserLocationUseCase().collect {
-                _viewStates.value = _viewStates.value.copy(userLocation = it)
                 if (it != null) getWeatherData(it)
             }
         }
@@ -45,6 +46,12 @@ class AddWeatherPhotoViewModel @Inject constructor(
             } catch (e: Exception) {
                 _viewStates.value = _viewStates.value.copy(loading = false, error = e)
             }
+        }
+    }
+
+    fun saveWeatherPhoto(image: String) {
+        viewModelScope.launch {
+            _viewStates.value.weatherData?.let { addWeatherPhotoUseCase.invoke(it, image) }
         }
     }
 }

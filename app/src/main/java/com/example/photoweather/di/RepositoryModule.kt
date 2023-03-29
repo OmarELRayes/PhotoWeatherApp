@@ -1,7 +1,7 @@
 package com.example.photoweather.di
 
-import com.example.photoweather.data.repository.WeatherDataRepositoryImpl
-import com.example.photoweather.domain.repository.WeatherDataRepository
+import com.example.photoweather.data.repository.WeatherRepositoryImpl
+import com.example.photoweather.domain.repository.WeatherRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -15,6 +15,6 @@ interface RepositoryModule {
     @Binds
     @ViewModelScoped
     fun provideWeatherDataRepository(
-        weatherDataRepository: WeatherDataRepositoryImpl
-    ): WeatherDataRepository
+        weatherDataRepository: WeatherRepositoryImpl
+    ): WeatherRepository
 }
