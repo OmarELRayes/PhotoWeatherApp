@@ -1,11 +1,7 @@
 package com.example.photoweather.ui.feature.add
 
 import android.Manifest
-import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
@@ -16,8 +12,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.photoweather.R
-import com.example.photoweather.common.FileHandler
 import com.example.photoweather.common.delegate.viewBinding
+import com.example.photoweather.common.extensions.shareImage
 import com.example.photoweather.databinding.FragmentAddWeatherPhotoBinding
 import com.example.photoweather.domain.model.WeatherData
 import com.example.photoweather.ui.base.BaseFragment
@@ -25,7 +21,6 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class AddWeatherPhotoFragment :
@@ -84,6 +79,8 @@ class AddWeatherPhotoFragment :
         state.weatherData?.let {
             updateWeatherData(it)
         }
+
+        binding.progressBar.isVisible = state.loading
     }
 
     private fun updateWeatherData(weatherData: WeatherData) {
@@ -108,7 +105,7 @@ class AddWeatherPhotoFragment :
         }
 
         state.error?.let {
-            Snackbar.make(requireView(), it.message ?: "Something went wrong", Snackbar.LENGTH_LONG)
+            Snackbar.make(requireView(), it.message ?: "Something went wrong", Snackbar.LENGTH_LONG).show()
         }
     }
 
@@ -124,28 +121,6 @@ class AddWeatherPhotoFragment :
                 viewModel.saveWeatherPhoto(args.imageUri)
                 findNavController().navigateUp()
             }
-        }
-    }
-
-    private fun getBitmapFromView(view: View): Bitmap {
-        val bitmap = Bitmap.createBitmap(
-            view.width,
-            view.height,
-            Bitmap.Config.ARGB_8888
-        )
-        val canvas = Canvas(bitmap)
-        view.draw(canvas)
-        return bitmap
-    }
-
-    private fun shareImage(view: View) {
-        lifecycleScope.launch {
-            val bitmap = getBitmapFromView(view)
-            val shareIntent = Intent(Intent.ACTION_SEND)
-            shareIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            shareIntent.putExtra(Intent.EXTRA_STREAM, FileHandler.getUri(requireContext(), bitmap))
-            shareIntent.type = "image/png"
-            startActivity(Intent.createChooser(shareIntent, "Share image"))
         }
     }
 }

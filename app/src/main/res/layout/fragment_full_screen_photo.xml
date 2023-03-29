@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.feature.add.AddWeatherPhotoFragment">
+    tools:context=".ui.feature.details.FullScreenPhotoFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/content"
@@ -14,27 +14,15 @@
         android:layout_marginHorizontal="32dp"
         android:layout_marginTop="32dp">
 
-
-        <com.google.android.material.progressindicator.CircularProgressIndicator
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:indeterminate="true"
-            android:translationZ="2dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="0dp"
             android:layout_height="350dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_empty"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_empty" />
 
         <View
             android:layout_width="match_parent"
@@ -107,26 +95,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <androidx.constraintlayout.widget.Group
-            android:id="@+id/groupWeatherData"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:constraint_referenced_ids="description,temperature,humidity,country,name" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnConfirm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="16dp"
-        android:enabled="false"
-        android:insetTop="0dp"
-        android:insetBottom="0dp"
-        android:text="@string/add_weather_confirm" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnShare"
@@ -134,7 +104,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="8dp"
-        android:enabled="false"
         android:insetTop="0dp"
         android:insetBottom="0dp"
         android:text="@string/add_weather_share" />

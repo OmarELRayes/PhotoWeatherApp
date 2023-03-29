@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_weatherPhotosFragment_to_addWeatherPhotoFragment"
             app:destination="@id/addWeatherPhotoFragment" />
+        <action
+            android:id="@+id/action_weatherPhotosFragment_to_fullScreenPhotoFragment"
+            app:destination="@id/fullScreenPhotoFragment" />
     </fragment>
     <fragment
         android:id="@+id/addWeatherPhotoFragment"
@@ -22,5 +25,14 @@
         <argument
             android:name="imageUri"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/fullScreenPhotoFragment"
+        android:name="com.example.photoweather.ui.feature.details.FullScreenPhotoFragment"
+        android:label="fragment_full_screen_photo"
+        tools:layout="@layout/fragment_full_screen_photo" >
+        <argument
+            android:name="weatherPhoto"
+            app:argType="com.example.photoweather.domain.model.WeatherPhoto" />
     </fragment>
 </navigation>

@@ -13,4 +13,5 @@
     <string name="add_weather_name">Name: %s</string>
     <string name="add_weather_confirm">Confirm</string>
     <string name="add_weather_share">Share</string>
+
 </resources>

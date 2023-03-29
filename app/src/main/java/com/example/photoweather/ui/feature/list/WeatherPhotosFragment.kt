@@ -15,6 +15,7 @@ import com.example.photoweather.common.FileHandler
 import com.example.photoweather.common.FileHandler.createImageFile
 import com.example.photoweather.common.delegate.viewBinding
 import com.example.photoweather.databinding.FragmentWeatherPhotosBinding
+import com.example.photoweather.domain.model.WeatherPhoto
 import com.example.photoweather.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
@@ -29,8 +30,14 @@ class WeatherPhotosFragment :
     override val viewModel: WeatherPhotosViewModel by viewModels()
     override val binding: FragmentWeatherPhotosBinding by viewBinding()
 
+    private val adapter by lazy {
+        WeatherPhotoAdapter {
+            onWeatherPhotoClick(it)
+        }
+    }
+
     private val photoFile by lazy {
-        createImageFile()
+        createImageFile(requireContext())
     }
 
     private val activityResult =
@@ -50,14 +57,24 @@ class WeatherPhotosFragment :
 
     private fun handleViewStates(state: WeatherPhotosViewState) {
         binding.emptyView.root.isVisible = state.isEmpty
+        adapter.submitList(state.weatherPhotos)
     }
 
     override fun initView() {
         with(binding) {
+            rvWeatherPhotos.adapter = adapter
             btnAddWeather.setOnClickListener {
                 takePhoto()
             }
         }
+    }
+
+    private fun onWeatherPhotoClick(weatherPhoto: WeatherPhoto) {
+        findNavController().navigate(
+            WeatherPhotosFragmentDirections.actionWeatherPhotosFragmentToFullScreenPhotoFragment(
+                weatherPhoto
+            )
+        )
     }
 
     private fun takePhoto() {

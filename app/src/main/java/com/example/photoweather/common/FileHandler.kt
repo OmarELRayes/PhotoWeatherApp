@@ -9,11 +9,10 @@ import java.io.File
 import java.io.FileOutputStream
 
 object FileHandler {
-    fun createImageFile(): File? {
+    fun createImageFile(context: Context): File? {
         val timeStamp = System.currentTimeMillis()
         val imageFileName = "NAME_$timeStamp"
-        val storageDir: File =
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+        val storageDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         return File.createTempFile(
             imageFileName, /* prefix */
             ".jpg", /* suffix */
@@ -32,8 +31,7 @@ object FileHandler {
     fun getUri(context: Context, image: Bitmap): Uri {
         val timeStamp = System.currentTimeMillis()
         val imageFileName = "NAME_$timeStamp"
-        val storageDir: File =
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+        val storageDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         val file = File.createTempFile(
             imageFileName, /* prefix */
             ".jpg", /* suffix */

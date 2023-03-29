@@ -7,9 +7,9 @@ import javax.inject.Inject
 class WeatherDataMapper @Inject constructor() : IMapper<WeatherDataResponse, WeatherData> {
     override fun map(inputFormat: WeatherDataResponse) = WeatherData(
         description = inputFormat.weather.firstOrNull()?.description ?: "",
-        temperature = inputFormat.main.temp,
-        humidity = inputFormat.main.humidity,
-        country = inputFormat.sys.country,
+        temperature = inputFormat.main.temp ?: 0.0,
+        humidity = inputFormat.main.humidity ?: 0,
+        country = inputFormat.sys?.country ?: "",
         name = inputFormat.name
     )
 
