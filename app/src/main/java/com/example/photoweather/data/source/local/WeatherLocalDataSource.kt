@@ -11,4 +11,8 @@ class WeatherLocalDataSource @Inject constructor(
     suspend fun addWeatherPhoto(weatherPhoto: WeatherPhoto) = with(dispatcher) {
         return@with dao.addWeatherPhoto(weatherPhoto)
     }
+
+    suspend fun getWeatherPhotos() = with(dispatcher) {
+        return@with dao.getWeatherPhotos()
+    }
 }

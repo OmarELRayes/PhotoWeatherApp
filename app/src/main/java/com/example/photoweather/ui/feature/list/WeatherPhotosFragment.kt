@@ -5,7 +5,10 @@ import android.content.Intent
 import android.net.Uri
 import android.provider.MediaStore
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.photoweather.R
 import com.example.photoweather.common.FileHandler
@@ -13,7 +16,11 @@ import com.example.photoweather.common.FileHandler.createImageFile
 import com.example.photoweather.common.delegate.viewBinding
 import com.example.photoweather.databinding.FragmentWeatherPhotosBinding
 import com.example.photoweather.ui.base.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
+@AndroidEntryPoint
 class WeatherPhotosFragment :
     BaseFragment<WeatherPhotosViewState, WeatherPhotosViewModel, FragmentWeatherPhotosBinding>(
         R.layout.fragment_weather_photos
@@ -35,6 +42,14 @@ class WeatherPhotosFragment :
         }
 
     override fun observeViewModel() {
+        viewModel.viewStates
+            .flowWithLifecycle(viewLifecycleOwner.lifecycle)
+            .onEach { value -> handleViewStates(value) }
+            .launchIn(lifecycleScope)
+    }
+
+    private fun handleViewStates(state: WeatherPhotosViewState) {
+        binding.emptyView.root.isVisible = state.isEmpty
     }
 
     override fun initView() {
